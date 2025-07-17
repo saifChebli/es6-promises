@@ -100,23 +100,23 @@
 
 // Creating a Promise 
 
-const myPromise = new Promise((resolve , reject) => {
-    let success = false
-    if(success){
-        resolve('Operation succeeded')
-    } else {
-        reject('Operation failed')
-    }
-})
+// const myPromise = new Promise((resolve , reject) => {
+//     let success = false
+//     if(success){
+//         resolve('Operation succeeded')
+//     } else {
+//         reject('Operation failed')
+//     }
+// })
 
 // Consuming a Promise
 
-myPromise
-.then((result) =>{
-    console.log(result) // Operation succeeded
-}).catch((error) => {
-    console.log(error) // Operation failed
-})
+// myPromise
+// .then((result) =>{
+//     console.log(result) // Operation succeeded
+// }).catch((error) => {
+//     console.log(error) // Operation failed
+// })
 
 
 // async / await 
@@ -126,3 +126,69 @@ myPromise
         // .Pending : You placed your order , now you're waiting 
         // .Fulfilled : You food arrives
         // .Rejected : The kitchen ran out , 'Sorry for that'
+
+
+// async and await in Javascript
+
+// 1. async keyword :
+
+// always returns a Promise
+
+// it allows us to use the await keyword inside that function
+
+// its simplifies handling asynchronous code by avoiding .then()
+
+
+// async function fetchUsers() {
+//     try {
+//         const response = await fetch('https://api.example.com/users')
+//         const data = await response.json()
+//     } catch (error) {
+//         console.log(error)
+//     }
+// }
+
+
+//Try to building a dashboard that fetches 
+
+//  - A user profile data
+//  - Posts
+//  - Notifications
+
+function getUserProfile () {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve('User Profile Data')
+        },1000)
+    })
+}
+
+function getUserPosts () {
+    return new Promise((resolve , reject) => {
+        setTimeout(() => {
+            resolve('Recent Posts')
+        },2000)
+    })
+}
+
+function getUserNotifications () {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve('Notifications')
+        },1500)
+    })
+}
+
+// 3 independent Api calls , but we need to wait for all of them
+
+
+Promise.all([getUserProfile(),getUserPosts(),getUserNotifications()])
+.then(([profile , posts , notifications]) => {
+    console.log('All data loaded')
+    console.log(profile);
+    console.log(posts);
+    console.log(notifications);
+}).catch((error) =>{
+    console.log('Something went wrong' , error)
+})
+
